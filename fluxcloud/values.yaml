@@ -1,0 +1,71 @@
+# Default values for fluxcloud.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+strategy: Recreate
+
+image:
+  repository: justinbarrick/fluxcloud
+  tag: v0.3.9
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+env:
+- name: SLACK_URL
+  value: "https://hooks.slack.com/services/WEBHOOK_URL"
+- name: SLACK_CHANNEL
+  value: "#kubernetes"
+- name: SLACK_USERNAME
+  value: Flux Deployer
+- name: SLACK_ICON_EMOJI
+  value: ":heart:"
+- name: GITHUB_URL
+  value: "https://github.com/justinbarrick/fluxcloud/"
+- name: LISTEN_ADDRESS
+  value: ":3032"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext:
+  runAsUser: 999
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
